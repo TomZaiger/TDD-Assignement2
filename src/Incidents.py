@@ -9,7 +9,7 @@ def pull_request(url):
 class Incident:
     def __init__(self, filters):
         viable_parameters = ['page', 'per_page', 'occurred_before', 'occurred_after',
-                           'incident_type', 'proximity', 'proximity_square', 'query']
+                             'incident_type', 'proximity', 'proximity_square', 'query']
         url = 'https://bikewise.org:443/api/v2/incidents?'
         filters_url = ''
         for key in filters:
