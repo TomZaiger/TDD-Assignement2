@@ -1,43 +1,59 @@
 import unittest
-from src.Incidents import feature1
-from unittest.mock import Mock
+from src.Incidents import Incident
+from unittest.mock import patch, Mock
 
 
 class IncidentsFeatureTest(unittest.TestCase):
-    @patch('src.feature1.requests.get')
-    def test1(self, mock_obj):
-        json_sample = {
-                        "incidents": [
-                            {
-                                "id": 114469,
-                                "title": "Sidewalk",
-                                "description": "Attachment to fire hydrant sticking on to the sidewalk. "
-                                               "Appears Dangerous, especially for a little kids riding their bikes by. "
-                                               "Please check and maybe twist"
-                                               " to the side or put some kind of cones there. "
-                                               "Thank you",
-                                "address": "283 Countryhaven Rd Encinitas 92024, United States",
-                                "occurred_at": 1584503541,
-                                "updated_at": 1584533778,
-                                "url": "https://bikewise.org/api/v1/incidents/114469",
-                                "source": {
-                                    "name": "SeeClickFix.com",
-                                    "html_url": "https://seeclickfix.com/issues/7561404",
-                                    "api_url": "https://seeclickfix.com/api/v2/issues/7561404"
-                                },
-                                "media": {
-                                    "image_url": "https://seeclickfix.com/files/issue_images/0167/0483/image.jpg",
-                                    "image_url_thumb":
-                                        "https://seeclickfix.com/files/issue_images/0167/0483/image_square.jpg"
-                                },
-                                "location_type": None,
-                                "location_description": None,
-                                "type": "Hazard",
-                                "type_properties": None
-                                }
-                            ]
+    @patch('src.Incidents.requests.get')
+    def Incident1(self, mock_obj):
+        sample1 = {
+                    "incidents": [
+                        {
+                            "id": 114480,
+                            "title": "Stolen Unknown(black and pink)",
+                            "description": "",
+                            "address": "Bedford, Mk401bl, GB",
+                            "occurred_at": 1584549626,
+                            "updated_at": 1584554436,
+                            "url": "https://bikewise.org/api/v1/incidents/114480",
+                            "source": {
+                                "name": "BikeIndex.org",
+                                "html_url": "https://bikeindex.org/bikes/701741",
+                                "api_url": "https://bikeindex.org/api/v1/bikes/701741"
+                            },
+                            "media": {
+                                "image_url": "https://files.bikeindex.org/uploads/Pu/228068/large_IMG_20200315_084521.jpg",
+                                "image_url_thumb": "https://files.bikeindex.org/uploads/Pu/228068/small_IMG_20200315_084521.jpg"
+                            },
+                            "location_type": None,
+                            "location_description": None,
+                            "type": "Theft",
+                            "type_properties": None
+                            }
+                        ]
                     }
-        mock_obj.return_value = Mock(ok=True)
-        mock_obj.return_value.json.return_value = json_sample
-        sample1 = feature1()
 
+        mock_obj.return_value = Mock(ok=True)
+        mock_obj.return_value.json.return_value = sample1
+        sample2 = Incident({'per_page': 1})
+
+        # Expected
+        sample1_image_urls = ["https://files.bikeindex.org/uploads/Pu/228068/large_IMG_20200315_084521.jpg"]
+        sample1_image_urls_type = list
+        sample1_titles = ["Stolen Unknown(black and pink)"]
+        sample1_titles_type = list
+
+        # Run
+        sample2_image_urls = sample2.get_image_urls()
+        sample2_titles = sample2.get_titles()
+
+        # Assert
+        self.assertEqual(sample1_image_urls, sample2_image_urls)
+        self.assertIsInstance(sample1_image_urls_type, sample2_image_urls)
+        self.assertIsNotNone(sample1_image_urls)
+        self.assertEqual(sample1_titles, sample2_titles)
+        self.assertIsInstance(sample1_titles_type, sample2_titles)
+        self.assertIsNotNone(sample1_titles)
+
+    if __name__ == '__main__':
+        unittest.main()
