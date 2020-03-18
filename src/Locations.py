@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 
 def pull_request(url):
@@ -6,7 +7,7 @@ def pull_request(url):
     return response
 
 
-class Incident:
+class Location:
     def __init__(self, filters):
         viable_parameters = ['occurred_before', 'occurred_after', 'incident_type', 'proximity',
                              'proximity_square', 'query', 'limit', 'all']
@@ -20,22 +21,22 @@ class Incident:
         filters_url = filters_url[:-1]
         self.response = pull_request(url+filters_url)
 
-    def get_image_urls(self):
-        image_urls = []
+    def get_coordinates(self):
+        coordinates = []
         if self.response is None:
-            return image_urls
+            return coordinates
 
-        for i in self.response['incidents']:
-            if(i["media"]["image_url"]) is not None:
-                image_urls.append(i["media"]["image_url"])
-        return image_urls
+        for i in self.response['features']:
+            if(i["geometry"]["coordinates"]) is not None:
+                coordinates.append(i["geometry"]["coordinates"])
+        return coordinates
 
-    def get_titles(self):
-        titles = []
+    def get_dates(self):
+        dates = []
         if self.response is None:
-            return titles
+            return dates
 
-        for i in self.response['incidents']:
-            if(i["title"]) is not None:
-                titles.append(i["title"])
-        return titles
+        for i in self.response['features']:
+            if(i["properties"]['occurred_at']) is not None:
+                dates.append(datetime.fromtimestamp(i["properties"]['occurred_at']).strftime('%d/%m/%y %H:%M:%S'))
+        return dates
