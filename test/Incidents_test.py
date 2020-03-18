@@ -45,9 +45,9 @@ class IncidentsFeatureTest(unittest.TestCase):
         sample2_titles = sample2.get_titles()
 
         # Assert
-        self.assertEqual(sample1_titles, sample2_titles)
-        self.assertIsInstance(sample2_titles, sample1_titles_type)
         self.assertIsNotNone(sample1_titles)
+        self.assertIsInstance(sample2_titles, sample1_titles_type)
+        self.assertEqual(sample1_titles, sample2_titles)
 
     @patch('src.Incidents.requests.get')
     def test_image_urls(self, mock_obj):
@@ -63,9 +63,9 @@ class IncidentsFeatureTest(unittest.TestCase):
         sample2_image_urls = sample2.get_image_urls()
 
         # Assert
-        self.assertEqual(sample1_image_urls, sample2_image_urls)
-        self.assertIsInstance(sample1_image_urls, sample1_image_urls_type)
         self.assertIsNotNone(sample1_image_urls)
+        self.assertIsInstance(sample1_image_urls, sample1_image_urls_type)
+        self.assertEqual(sample1_image_urls, sample2_image_urls)
 
     if __name__ == '__main__':
         unittest.main()
