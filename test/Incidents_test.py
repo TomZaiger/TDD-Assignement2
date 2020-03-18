@@ -38,21 +38,15 @@ class IncidentsFeatureTest(unittest.TestCase):
         sample2 = Incident({'per_page': 1})
 
         # Expected
-        sample1_image_urls = ["https://files.bikeindex.org/uploads/Pu/228068/large_IMG_20200315_084521.jpg"]
-        sample1_image_urls_type = []
         sample1_titles = ["Stolen Unknown(black and pink)"]
-        sample1_titles_type = []
+        sample1_titles_type = list
 
         # Run
-        sample2_image_urls = sample2.get_image_urls()
         sample2_titles = sample2.get_titles()
 
         # Assert
-        self.assertEqual(sample1_image_urls, sample2_image_urls)
-        'self.assertIsInstance(sample1_image_urls_type, sample2_image_urls)'
-        self.assertIsNotNone(sample1_image_urls)
         self.assertEqual(sample1_titles, sample2_titles)
-        'self.assertIsInstance(sample1_titles_type, sample2_titles)'
+        self.assertIsInstance(sample2_titles, sample1_titles_type)
         self.assertIsNotNone(sample1_titles)
 
     @patch('src.Incidents.requests.get')
@@ -64,20 +58,14 @@ class IncidentsFeatureTest(unittest.TestCase):
         # Expected
         sample1_image_urls = ["https://files.bikeindex.org/uploads/Pu/228068/large_IMG_20200315_084521.jpg"]
         sample1_image_urls_type = list
-        sample1_titles = ["Stolen Unknown(black and pink)"]
-        sample1_titles_type = list
 
         # Run
         sample2_image_urls = sample2.get_image_urls()
-        sample2_titles = sample2.get_titles()
 
         # Assert
         self.assertEqual(sample1_image_urls, sample2_image_urls)
         self.assertIsInstance(sample1_image_urls, sample1_image_urls_type)
         self.assertIsNotNone(sample1_image_urls)
-        self.assertEqual(sample2_titles, sample2_titles)
-        self.assertIsInstance(sample2_titles, sample1_titles_type)
-        self.assertIsNotNone(sample1_titles)
 
     if __name__ == '__main__':
         unittest.main()
