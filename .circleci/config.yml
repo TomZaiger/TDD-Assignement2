@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
+  pylint: qventus/python-lint@volatile
 
 jobs:
   build-and-test:
@@ -19,3 +20,6 @@ workflows:
   main:
     jobs:
       - build-and-test
+      - pylint/lint
+
+      
